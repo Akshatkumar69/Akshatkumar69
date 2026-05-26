@@ -1,0 +1,61 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension table. One row per customer."
+    columns:
+      - name: customer_id
+        description: "Primary key — unique customer identifier"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        tests:
+          - not_null
+      - name: customer_segment
+        tests:
+          - not_null
+      - name: country
+        tests:
+          - not_null
+      - name: business_type
+        tests:
+          - accepted_values:
+              values: ['B2B', 'B2C', 'Unknown']
+
+  - name: fct_orders
+    description: "Order fact table. One row per order. Primary table for MetricFlow metrics."
+    columns:
+      - name: order_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "FK to dim_customers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: revenue
+        tests:
+          - not_null
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['completed', 'returned', 'pending', 'cancelled', 'shipped']
+      - name: ordered_at
+        description: "Primary time dimension for MetricFlow"
+        tests:
+          - not_null
+
+  - name: gold_sales_summary
+    description: "Pre-aggregated gold layer. Monthly sales summary per customer."
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+      - name: order_month
+        tests:
+          - not_null
