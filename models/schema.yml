@@ -1,21 +1,15 @@
-
 version: 2
 
 models:
-    - name: my_first_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
-            tests:
-                - unique
-                - not_null
+  - name: time_spine
 
-    - name: my_second_dbt_model
-      description: "A starter dbt model"
-      columns:
-          - name: id
-            description: "The primary key for this table"
-            tests:
-                - unique
-                - not_null
+    description: "Time spine model for MetricFlow"
+
+    meta:
+      metricflow:
+        time_spine:
+          standard_granularity_column: date_day
+
+    columns:
+      - name: date_day
+        description: "Date column"
