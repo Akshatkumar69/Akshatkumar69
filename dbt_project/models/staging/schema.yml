@@ -1,0 +1,76 @@
+version: 2
+
+# ─── SOURCE DECLARATIONS ────────────────────────────────────────────────────
+sources:
+  - name: raw
+    description: "Raw source tables in Databricks. Change database/schema to match your environment."
+    database: hive_metastore   # change to your catalog (or remove for hive_metastore default)
+    schema: default            # change to your raw schema
+    tables:
+      - name: customers
+        description: "Raw customer records from the source system."
+        columns:
+          - name: id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: email
+            tests:
+              - not_null
+
+      - name: orders
+        description: "Raw order records from the source system."
+        columns:
+          - name: id
+            description: "Primary key"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: "Foreign key to customers"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'customers')
+                  field: id
+
+# ─── STAGING MODELS ─────────────────────────────────────────────────────────
+models:
+  - name: stg_customers
+    description: "Cleaned and renamed customer records."
+    columns:
+      - name: customer_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      - name: email
+        tests:
+          - not_null
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              values: ['consumer', 'corporate', 'home office', 'unknown']
+              quote: true
+
+  - name: stg_orders
+    description: "Cleaned and renamed order records."
+    columns:
+      - name: order_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "FK to stg_customers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['completed', 'returned', 'pending', 'cancelled', 'shipped']
+              quote: true

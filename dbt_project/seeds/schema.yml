@@ -1,0 +1,30 @@
+version: 2
+
+seeds:
+  - name: customers
+    description: "Sample customer seed data for local testing without Databricks"
+    config:
+      column_types:
+        id: bigint
+        created_at: timestamp
+        updated_at: timestamp
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null
+
+  - name: orders
+    description: "Sample order seed data for local testing without Databricks"
+    config:
+      column_types:
+        id: bigint
+        customer_id: bigint
+        amount: double
+        discount: double
+        quantity: int
+    columns:
+      - name: id
+        tests:
+          - unique
+          - not_null

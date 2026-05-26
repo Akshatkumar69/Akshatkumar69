@@ -1,0 +1,68 @@
+version: 2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SAVED QUERIES
+# Pre-defined MetricFlow queries for common business reports
+# Run: mf list saved-queries
+# ═══════════════════════════════════════════════════════════════════════════════
+
+saved_queries:
+  - name: monthly_revenue_by_segment
+    label: "Monthly Revenue by Customer Segment"
+    description: "Revenue and order count broken down by month and customer segment"
+    query_params:
+      metrics:
+        - total_revenue
+        - total_orders
+        - average_order_value
+      group_by:
+        - metric_time__month
+        - orders__customer_segment
+
+  - name: revenue_by_country
+    label: "Revenue by Country"
+    description: "Total revenue, orders, and AOV broken down by country"
+    query_params:
+      metrics:
+        - total_revenue
+        - total_orders
+        - average_order_value
+        - distinct_customers_ordering
+      group_by:
+        - orders__country
+
+  - name: order_status_breakdown
+    label: "Order Status Breakdown"
+    description: "Orders broken down by status with completion and return rates"
+    query_params:
+      metrics:
+        - total_orders
+        - completed_orders
+        - returned_orders
+        - completion_rate
+        - return_rate
+      group_by:
+        - orders__order_status
+        - metric_time__month
+
+  - name: customer_acquisition_monthly
+    label: "Monthly Customer Acquisition"
+    description: "New customers acquired per month"
+    query_params:
+      metrics:
+        - total_new_customers
+        - total_customers
+      group_by:
+        - metric_time__month
+
+  - name: revenue_summary_daily
+    label: "Daily Revenue Summary"
+    description: "Day-level revenue tracking for dashboards"
+    query_params:
+      metrics:
+        - total_revenue
+        - net_revenue
+        - total_orders
+        - total_discounts
+      group_by:
+        - metric_time__day

@@ -1,0 +1,78 @@
+version: 2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SEMANTIC MODEL: customers
+# Maps to dbt model: dim_customers
+# Dimension table — joins to orders via customer entity
+# ═══════════════════════════════════════════════════════════════════════════════
+
+semantic_models:
+  - name: customers
+    description: "Customer dimension semantic model. One record per customer. Joins to orders via customer entity."
+    model: ref('dim_customers')
+
+    # ── ENTITIES ──────────────────────────────────────────────────────────────
+    entities:
+      - name: customer
+        type: primary                  # this is the grain of THIS table
+        expr: customer_id
+
+    # ── DIMENSIONS ────────────────────────────────────────────────────────────
+    dimensions:
+      - name: customer_name
+        type: categorical
+        description: "Full name of the customer"
+        expr: customer_name
+
+      - name: email
+        type: categorical
+        description: "Customer email address"
+        expr: email
+
+      - name: country
+        type: categorical
+        description: "Country of the customer"
+        expr: country
+
+      - name: city
+        type: categorical
+        description: "City of the customer"
+        expr: city
+
+      - name: customer_segment
+        type: categorical
+        description: "Business segment: consumer, corporate, home office"
+        expr: customer_segment
+
+      - name: business_type
+        type: categorical
+        description: "B2B or B2C derived from segment"
+        expr: business_type
+
+      - name: is_new_customer
+        type: categorical
+        description: "Whether the customer was acquired in the last 365 days"
+        expr: is_new_customer
+
+      # Time dimension for customer-specific time-based metrics
+      - name: created_at
+        type: time
+        type_params:
+          time_granularity: day
+        description: "When the customer account was created"
+        expr: created_at
+        label: "Customer Created Date"
+
+    # ── MEASURES ──────────────────────────────────────────────────────────────
+    measures:
+      - name: customer_count
+        description: "Total number of customers"
+        agg: count
+        expr: customer_id
+        agg_time_dimension: created_at
+
+      - name: new_customer_count
+        description: "Number of new customers (acquired in last 365 days)"
+        agg: sum
+        expr: "case when is_new_customer = true then 1 else 0 end"
+        agg_time_dimension: created_at
