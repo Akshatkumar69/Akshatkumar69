@@ -20,7 +20,7 @@ semantic_models:
           time_granularity: day
 
     measures:
-      - name: revenue_measure
+      - name: revenue_measure_g
         agg: sum
         expr: amount
 
