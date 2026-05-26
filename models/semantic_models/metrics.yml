@@ -1,0 +1,25 @@
+metrics:
+  - name: revenue
+    label: Revenue
+    type: simple
+
+    type_params:
+      measure: total_revenue
+
+  - name: orders
+    label: Orders
+    type: simple
+
+    type_params:
+      measure: total_orders
+
+  - name: avg_order_value
+    label: Average Order Value
+    type: derived
+
+    type_params:
+      expr: revenue / orders
+
+      metrics:
+        - name: revenue
+        - name: orders

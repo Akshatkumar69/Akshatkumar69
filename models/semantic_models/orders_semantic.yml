@@ -10,6 +10,12 @@ semantic_models:
       - name: order_id
         type: primary
 
+      - name: customer_id
+        type: foreign
+
+      - name: product_id
+        type: foreign
+
     dimensions:
       - name: order_date
         type: time
@@ -19,10 +25,19 @@ semantic_models:
         type_params:
           time_granularity: day
 
+      - name: status
+        type: categorical
+
     measures:
-      - name: revenue_measure_g
+      - name: total_revenue
+        description: Total order revenue
         agg: sum
         expr: amount
 
-      - name: total_orders_measure
-        agg: countaggbase_metric
+      - name: total_orders
+        description: Count of orders
+        agg: count
+
+      - name: total_quantity
+        agg: sum
+        expr: quantity
