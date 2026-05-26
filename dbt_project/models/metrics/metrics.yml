@@ -8,57 +8,50 @@ metrics:
     label: "Total Revenue"
     description: "Sum of order amounts across all orders"
     type: simple
-    type_params:
-      measure:
-        name: revenue
+    agg: sum          # Required aggregation type
+    expr: revenue     # The column name or expression
 
   - name: total_orders
     label: "Total Orders"
     description: "Count of all orders placed"
     type: simple
-    type_params:
-      measure:
-        name: order_count
+    agg: count
+    expr: order_id
 
   - name: total_customers
     label: "Total Customers"
     description: "Count of all customers"
     type: simple
-    type_params:
-      measure:
-        name: customer_count
+    agg: count_distinct
+    expr: customer_id
 
   - name: total_new_customers
     label: "New Customers"
     description: "Customers who signed up in the last 365 days"
     type: simple
-    type_params:
-      measure:
-        name: new_customer_count
+    agg: count_distinct
+    expr: new_customer_id
 
   - name: completed_orders
     label: "Completed Orders"
     description: "Count of orders with status = completed"
     type: simple
-    type_params:
-      measure:
-        name: completed_order_count
+    agg: sum
+    expr: is_completed # assuming an indicator or filtered column
 
   - name: returned_orders
     label: "Returned Orders"
     description: "Count of orders with status = returned"
     type: simple
-    type_params:
-      measure:
-        name: returned_order_count
+    agg: sum
+    expr: is_returned
 
   - name: distinct_customers_with_orders
     label: "Customers Who Ordered"
     description: "Unique customers who placed at least one order"
     type: simple
-    type_params:
-      measure:
-        name: distinct_customers
+    agg: count_distinct
+    expr: customer_id
 
   # ── RATIO METRICS ────────────────────────────────────────────────────────────
 
@@ -66,41 +59,29 @@ metrics:
     label: "Average Order Value (AOV)"
     description: "Total Revenue divided by Total Orders"
     type: ratio
-    type_params:
-      numerator:
-        name: revenue
-      denominator:
-        name: order_count
+    numerator: total_revenue      # Pointing to the simple metric names above
+    denominator: total_orders
 
   - name: return_rate
     label: "Return Rate"
     description: "Returned Orders as a % of Total Orders"
     type: ratio
-    type_params:
-      numerator:
-        name: returned_order_count
-      denominator:
-        name: order_count
+    numerator: returned_orders
+    denominator: total_orders
 
   - name: completion_rate
     label: "Order Completion Rate"
     description: "Completed Orders as a % of Total Orders"
     type: ratio
-    type_params:
-      numerator:
-        name: completed_order_count
-      denominator:
-        name: order_count
+    numerator: completed_orders
+    denominator: total_orders
 
   - name: revenue_per_customer
     label: "Revenue Per Customer"
     description: "Total Revenue divided by distinct ordering customers"
     type: ratio
-    type_params:
-      numerator:
-        name: revenue
-      denominator:
-        name: distinct_customers
+    numerator: total_revenue
+    denominator: distinct_customers_with_orders
 
   # ── DERIVED METRICS ───────────────────────────────────────────────────────────
 
@@ -108,8 +89,7 @@ metrics:
     label: "Orders Per Customer"
     description: "Average number of orders per customer"
     type: derived
-    type_params:
-      expr: "total_orders / total_customers"
-      metrics:
-        - name: total_orders
-        - name: total_customers
+    expr: "total_orders / total_customers"
+    input_metrics:             # Note: the key is now input_metrics, pluralized
+      - name: total_orders
+      - name: total_customers
