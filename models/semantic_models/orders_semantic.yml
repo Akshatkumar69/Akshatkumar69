@@ -1,6 +1,6 @@
 semantic_models:
   - name: orders
-    model: ref('orders')
+    model: ref('fct_orders')
     measures:
       - name: revenue
         agg: sum
