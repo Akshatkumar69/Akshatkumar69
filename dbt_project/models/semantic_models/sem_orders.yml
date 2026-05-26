@@ -2,76 +2,58 @@ version: 2
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SEMANTIC MODEL: orders
-# Maps to dbt model: fct_orders
-# This defines HOW MetricFlow understands your orders data
+# Source dbt model: fct_orders
+# Real columns used: order_id, customer_id, revenue, order_status,
+#                    is_completed, is_returned, city, ordered_at
 # ═══════════════════════════════════════════════════════════════════════════════
 
 semantic_models:
   - name: orders
-    description: "Order-level semantic model. One record per order. Primary source for all revenue and order metrics."
-    model: ref('fct_orders')           # points to your dbt mart model
+    description: "Order-level semantic model. One row per order. All revenue and order metrics live here."
+    model: ref('fct_orders')
 
     # ── ENTITIES ──────────────────────────────────────────────────────────────
-    # Entities are the "keys" — they connect semantic models together (like JOINs)
     entities:
       - name: order
-        type: primary                  # this is the grain of THIS table
+        type: primary
         expr: order_id
 
       - name: customer
-        type: foreign                  # FK to dim_customers semantic model
+        type: foreign
         expr: customer_id
 
     # ── DIMENSIONS ────────────────────────────────────────────────────────────
-    # Dimensions = attributes you can GROUP BY or FILTER on
     dimensions:
       - name: order_status
         type: categorical
-        description: "Status of the order: completed, returned, pending, cancelled, shipped"
+        description: "Order status: completed, returned, pending, cancelled, shipped"
         expr: order_status
-
-      - name: payment_method
-        type: categorical
-        description: "Payment method used for the order"
-        expr: payment_method
 
       - name: is_completed
         type: categorical
-        description: "Whether the order was completed (true/false)"
+        description: "True if order status is completed"
         expr: is_completed
 
       - name: is_returned
         type: categorical
-        description: "Whether the order was returned (true/false)"
+        description: "True if order status is returned"
         expr: is_returned
-
-      - name: customer_segment
-        type: categorical
-        description: "Customer segment: consumer, corporate, home office"
-        expr: customer_segment
-
-      - name: country
-        type: categorical
-        description: "Customer country"
-        expr: country
 
       - name: city
         type: categorical
-        description: "Customer city"
+        description: "Customer city (denormalized from dim_customers)"
         expr: city
 
-      # ── TIME DIMENSION ──────────────────────────────────────────────────────
-      # CRITICAL: MetricFlow REQUIRES exactly ONE primary time dimension
+      # PRIMARY TIME DIMENSION — MetricFlow requires exactly one
       - name: ordered_at
         type: time
         type_params:
-          time_granularity: day        # finest grain available
-        description: "Timestamp of when the order was placed. Primary time dimension."
+          time_granularity: day
+        description: "Order date cast as timestamp. Primary time dimension for all metrics."
         expr: ordered_at
         label: "Order Date"
 
     # ── MEASURES ──────────────────────────────────────────────────────────────
-    # Measures = raw aggregations on columns (the building blocks of metrics)
     measures:
       - name: order_count
         description: "Total number of orders"
@@ -80,27 +62,9 @@ semantic_models:
         agg_time_dimension: ordered_at
 
       - name: revenue
-        description: "Total gross revenue (before discounts)"
+        description: "Total gross revenue (sum of amount)"
         agg: sum
         expr: revenue
-        agg_time_dimension: ordered_at
-
-      - name: net_revenue
-        description: "Total net revenue (after discounts)"
-        agg: sum
-        expr: net_revenue
-        agg_time_dimension: ordered_at
-
-      - name: discount_amount
-        description: "Total discount value given"
-        agg: sum
-        expr: discount_amount
-        agg_time_dimension: ordered_at
-
-      - name: quantity_sold
-        description: "Total units/quantity sold"
-        agg: sum
-        expr: quantity
         agg_time_dimension: ordered_at
 
       - name: average_order_value
@@ -110,19 +74,19 @@ semantic_models:
         agg_time_dimension: ordered_at
 
       - name: distinct_customers
-        description: "Count of distinct customers who placed orders"
+        description: "Count of unique customers who placed orders"
         agg: count_distinct
         expr: customer_id
         agg_time_dimension: ordered_at
 
-      - name: completed_orders
-        description: "Count of completed orders only"
+      - name: completed_order_count
+        description: "Count of completed orders"
         agg: sum
         expr: "case when is_completed = true then 1 else 0 end"
         agg_time_dimension: ordered_at
 
-      - name: returned_orders
-        description: "Count of returned orders only"
+      - name: returned_order_count
+        description: "Count of returned orders"
         agg: sum
         expr: "case when is_returned = true then 1 else 0 end"
         agg_time_dimension: ordered_at

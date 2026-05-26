@@ -1,15 +1,15 @@
 version: 2
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# SAVED QUERIES
-# Pre-defined MetricFlow queries for common business reports
+# SAVED QUERIES — pre-defined MetricFlow queries for common reports
 # Run: mf list saved-queries
 # ═══════════════════════════════════════════════════════════════════════════════
 
 saved_queries:
-  - name: monthly_revenue_by_segment
-    label: "Monthly Revenue by Customer Segment"
-    description: "Revenue and order count broken down by month and customer segment"
+
+  - name: monthly_revenue
+    label: "Monthly Revenue"
+    description: "Total revenue and order count broken down by month"
     query_params:
       metrics:
         - total_revenue
@@ -17,23 +17,21 @@ saved_queries:
         - average_order_value
       group_by:
         - metric_time__month
-        - orders__customer_segment
 
-  - name: revenue_by_country
-    label: "Revenue by Country"
-    description: "Total revenue, orders, and AOV broken down by country"
+  - name: revenue_by_city
+    label: "Revenue by City"
+    description: "Revenue and order count grouped by customer city"
     query_params:
       metrics:
         - total_revenue
         - total_orders
-        - average_order_value
-        - distinct_customers_ordering
+        - distinct_customers_with_orders
       group_by:
-        - orders__country
+        - orders__city
 
-  - name: order_status_breakdown
-    label: "Order Status Breakdown"
-    description: "Orders broken down by status with completion and return rates"
+  - name: order_status_summary
+    label: "Order Status Summary"
+    description: "Completed vs returned orders with rates"
     query_params:
       metrics:
         - total_orders
@@ -42,27 +40,14 @@ saved_queries:
         - completion_rate
         - return_rate
       group_by:
-        - orders__order_status
         - metric_time__month
 
-  - name: customer_acquisition_monthly
-    label: "Monthly Customer Acquisition"
-    description: "New customers acquired per month"
+  - name: customer_signup_trend
+    label: "Customer Signup Trend"
+    description: "New vs total customers over time"
     query_params:
       metrics:
-        - total_new_customers
         - total_customers
+        - total_new_customers
       group_by:
         - metric_time__month
-
-  - name: revenue_summary_daily
-    label: "Daily Revenue Summary"
-    description: "Day-level revenue tracking for dashboards"
-    query_params:
-      metrics:
-        - total_revenue
-        - net_revenue
-        - total_orders
-        - total_discounts
-      group_by:
-        - metric_time__day

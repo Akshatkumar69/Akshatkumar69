@@ -1,6 +1,6 @@
 -- models/marts/dim_customers.sql
 -- Dimension table: one row per customer
--- Used by MetricFlow as a dimension source
+-- Columns available: customer_id, customer_name, city, signup_date
 
 with customers as (
     select * from {{ ref('stg_customers') }}
@@ -8,34 +8,24 @@ with customers as (
 
 final as (
     select
-        -- Primary key (used as entity in MetricFlow)
+        -- Primary key (entity in MetricFlow)
         customer_id,
 
-        -- Descriptive attributes (dimensions in MetricFlow)
+        -- Dimensions
         customer_name,
-        email,
-        country,
         city,
-        customer_segment,
 
-        -- Derived dimensions
+        -- Date dimensions
+        signup_date,
+        date_format(signup_date, 'yyyy-MM')         as signup_month,
+        year(signup_date)                            as signup_year,
+
+        -- Derived: is the customer new (signed up in last 365 days)?
         case
-            when customer_segment = 'corporate'    then 'B2B'
-            when customer_segment = 'consumer'     then 'B2C'
-            when customer_segment = 'home office'  then 'B2C'
-            else 'Unknown'
-        end as business_type,
-
-        -- Dates
-        created_at,
-        updated_at,
-
-        -- Is the customer active (created in last 365 days)?
-        case
-            when datediff(current_date(), date(created_at)) <= 365
+            when datediff(current_date(), signup_date) <= 365
             then true
             else false
-        end as is_new_customer
+        end                                          as is_new_customer
 
     from customers
 )

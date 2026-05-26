@@ -1,28 +1,28 @@
 version: 2
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# METRICS DEFINITIONS
-# These are the business-facing metrics powered by MetricFlow.
-# Run: mf query --metrics <metric_name> --group-by <dimension>
+# METRICS — powered by MetricFlow
+# Based on REAL columns: order_id, customer_id, order_date, amount, status
+#                        customer_id, customer_name, city, signup_date
+#
+# Query examples (after dbt run + mf validate-configs):
+#   mf query --metrics total_revenue --group-by metric_time
+#   mf query --metrics total_revenue --group-by metric_time__month
+#   mf query --metrics total_orders --group-by orders__order_status
+#   mf query --metrics total_revenue --group-by orders__city
+#   mf query --metrics average_order_value --group-by metric_time__month
 # ═══════════════════════════════════════════════════════════════════════════════
 
 metrics:
 
-  # ── SIMPLE METRICS (direct from measures) ───────────────────────────────────
+  # ── SIMPLE METRICS ───────────────────────────────────────────────────────────
 
   - name: total_revenue
     label: "Total Revenue"
-    description: "Sum of gross revenue across all orders"
+    description: "Sum of order amounts across all orders"
     type: simple
     type_params:
       measure: revenue
-
-  - name: total_net_revenue
-    label: "Total Net Revenue"
-    description: "Sum of net revenue (after discounts) across all orders"
-    type: simple
-    type_params:
-      measure: net_revenue
 
   - name: total_orders
     label: "Total Orders"
@@ -33,58 +33,44 @@ metrics:
 
   - name: total_customers
     label: "Total Customers"
-    description: "Count of all customers"
+    description: "Count of all customers in dim_customers"
     type: simple
     type_params:
       measure: customer_count
 
   - name: total_new_customers
-    label: "Total New Customers"
-    description: "Count of customers acquired in the last 365 days"
+    label: "New Customers"
+    description: "Customers who signed up in the last 365 days"
     type: simple
     type_params:
       measure: new_customer_count
-
-  - name: total_quantity_sold
-    label: "Total Quantity Sold"
-    description: "Total units sold across all orders"
-    type: simple
-    type_params:
-      measure: quantity_sold
-
-  - name: total_discounts
-    label: "Total Discounts Given"
-    description: "Sum of all discount amounts"
-    type: simple
-    type_params:
-      measure: discount_amount
 
   - name: completed_orders
     label: "Completed Orders"
     description: "Count of orders with status = completed"
     type: simple
     type_params:
-      measure: completed_orders
+      measure: completed_order_count
 
   - name: returned_orders
     label: "Returned Orders"
-    description: "Count of orders that were returned"
+    description: "Count of orders with status = returned"
     type: simple
     type_params:
-      measure: returned_orders
+      measure: returned_order_count
 
-  - name: distinct_customers_ordering
-    label: "Distinct Customers (Ordering)"
+  - name: distinct_customers_with_orders
+    label: "Customers Who Ordered"
     description: "Count of unique customers who placed at least one order"
     type: simple
     type_params:
       measure: distinct_customers
 
-  # ── RATIO METRICS ───────────────────────────────────────────────────────────
+  # ── RATIO METRICS ────────────────────────────────────────────────────────────
 
   - name: average_order_value
     label: "Average Order Value (AOV)"
-    description: "Average revenue per order = Total Revenue / Total Orders"
+    description: "Total Revenue divided by Total Orders"
     type: ratio
     type_params:
       numerator: revenue
@@ -92,73 +78,36 @@ metrics:
 
   - name: return_rate
     label: "Return Rate"
-    description: "Percentage of orders that were returned = Returned / Total Orders"
+    description: "Returned Orders as a % of Total Orders"
     type: ratio
     type_params:
-      numerator: returned_orders
+      numerator: returned_order_count
       denominator: order_count
 
   - name: completion_rate
     label: "Order Completion Rate"
-    description: "Percentage of orders that were completed = Completed / Total Orders"
+    description: "Completed Orders as a % of Total Orders"
     type: ratio
     type_params:
-      numerator: completed_orders
+      numerator: completed_order_count
       denominator: order_count
 
   - name: revenue_per_customer
     label: "Revenue Per Customer"
-    description: "Average revenue generated per ordering customer"
+    description: "Total Revenue divided by distinct ordering customers"
     type: ratio
     type_params:
       numerator: revenue
       denominator: distinct_customers
 
-  - name: discount_rate
-    label: "Discount Rate"
-    description: "Discounts as a % of gross revenue"
-    type: ratio
-    type_params:
-      numerator: discount_amount
-      denominator: revenue
-
-  # ── DERIVED METRICS (expression on top of other metrics) ────────────────────
-
-  - name: gross_profit
-    label: "Gross Profit (Net Revenue)"
-    description: "Net revenue after all discounts = Revenue - Discounts"
-    type: derived
-    type_params:
-      expr: "total_revenue - total_discounts"
-      metrics:
-        - name: total_revenue
-        - name: total_discounts
+  # ── DERIVED METRICS ───────────────────────────────────────────────────────────
 
   - name: orders_per_customer
     label: "Orders Per Customer"
-    description: "Average number of orders each customer places"
+    description: "Average number of orders per customer"
     type: derived
     type_params:
       expr: "total_orders / total_customers"
       metrics:
         - name: total_orders
         - name: total_customers
-
-# ═══════════════════════════════════════════════════════════════════════════════
-# HOW TO QUERY THESE METRICS
-# ───────────────────────────────────────────────────────────────────────────────
-# After running: dbt run && mf validate-configs
-#
-# Query examples:
-#
-#   mf query --metrics total_revenue --group-by metric_time
-#   mf query --metrics total_revenue --group-by metric_time__month
-#   mf query --metrics total_revenue,total_orders --group-by orders__order_status
-#   mf query --metrics average_order_value --group-by orders__customer_segment
-#   mf query --metrics total_revenue --group-by orders__country
-#   mf query --metrics return_rate --group-by metric_time__month
-#   mf query --metrics total_revenue --start-time 2024-01-01 --end-time 2024-12-31
-#
-# Validate config:
-#   mf validate-configs
-# ═══════════════════════════════════════════════════════════════════════════════

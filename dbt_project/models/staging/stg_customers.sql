@@ -1,29 +1,27 @@
 -- models/staging/stg_customers.sql
--- Staging layer: light cleaning of raw customer data
--- Source: raw customers table in Databricks
+-- Source: workspace.default.customers
+-- Real columns: customer_id (int), customer_name (string), city (string), signup_date (date)
 
 with source as (
     select * from {{ source('raw', 'customers') }}
 ),
 
-renamed as (
+cleaned as (
     select
-        -- IDs
-        cast(id as bigint)              as customer_id,
+        -- Primary key
+        cast(customer_id as bigint)         as customer_id,
 
         -- Attributes
-        coalesce(name, 'Unknown')       as customer_name,
-        lower(trim(email))              as email,
-        lower(trim(country))            as country,
-        lower(trim(city))               as city,
-        lower(trim(segment))            as customer_segment,   -- e.g. 'consumer', 'corporate', 'home office'
+        coalesce(
+            trim(customer_name), 'Unknown'
+        )                                   as customer_name,
+        coalesce(trim(city), 'Unknown')     as city,
 
-        -- Dates
-        cast(created_at as timestamp)   as created_at,
-        cast(updated_at as timestamp)   as updated_at
+        -- Date
+        cast(signup_date as date)           as signup_date
 
     from source
-    where id is not null
+    where customer_id is not null
 )
 
-select * from renamed
+select * from cleaned

@@ -1,36 +1,96 @@
 version: 2
 
-# ─── SOURCE DECLARATIONS ────────────────────────────────────────────────────
+# ─── SOURCE DECLARATIONS ─────────────────────────────────────────────────────
+# Catalog: workspace | Schema: default
+# customers columns: customer_id (int), customer_name (string), city (string), signup_date (date)
+# orders columns:    order_id (int), customer_id (int), order_date (date), amount (double), status (string)
+# ─────────────────────────────────────────────────────────────────────────────
+
 sources:
   - name: raw
+<<<<<<< HEAD
     database: workspace       # ← your catalog name
     schema: default           # ← your schema name
     tables:
       - name: customers       # ← already correct ✅
       - name: orders 
 
+=======
+    database: workspace
+    schema: default
+    tables:
 
-# ─── STAGING MODELS ─────────────────────────────────────────────────────────
+      - name: customers
+        description: "Raw customer records from workspace.default.customers"
+        columns:
+          - name: customer_id
+            description: "Primary key (int)"
+            tests:
+              - unique
+              - not_null
+          - name: customer_name
+            description: "Full name of the customer"
+            tests:
+              - not_null
+          - name: city
+            description: "City where the customer is located"
+          - name: signup_date
+            description: "Date the customer signed up"
+            tests:
+              - not_null
+
+      - name: orders
+        description: "Raw order records from workspace.default.orders"
+        columns:
+          - name: order_id
+            description: "Primary key (int)"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: "Foreign key to customers"
+            tests:
+              - not_null
+              - relationships:
+                  to: source('raw', 'customers')
+                  field: customer_id
+          - name: order_date
+            description: "Date the order was placed"
+            tests:
+              - not_null
+          - name: amount
+            description: "Order amount in double"
+            tests:
+              - not_null
+          - name: status
+            description: "Order status string"
+            tests:
+              - not_null
+
+# ─── STAGING MODELS ──────────────────────────────────────────────────────────
+>>>>>>> 3876cd939a14e501594e136c56ca0f1c51699eed
+
 models:
   - name: stg_customers
-    description: "Cleaned and renamed customer records."
+    description: "Cleaned customer records. Exact columns: customer_id, customer_name, city, signup_date."
     columns:
       - name: customer_id
         description: "Primary key"
         tests:
           - unique
           - not_null
-      - name: email
+      - name: customer_name
         tests:
           - not_null
-      - name: customer_segment
+      - name: city
         tests:
-          - accepted_values:
-              values: ['consumer', 'corporate', 'home office', 'unknown']
-              quote: true
+          - not_null
+      - name: signup_date
+        tests:
+          - not_null
 
   - name: stg_orders
-    description: "Cleaned and renamed order records."
+    description: "Cleaned order records. Exact columns: order_id, customer_id, order_date, amount, status."
     columns:
       - name: order_id
         description: "Primary key"
@@ -44,7 +104,14 @@ models:
           - relationships:
               to: ref('stg_customers')
               field: customer_id
+      - name: order_date
+        tests:
+          - not_null
+      - name: amount
+        tests:
+          - not_null
       - name: order_status
+        description: "Cleaned status field (renamed from 'status')"
         tests:
           - accepted_values:
               values: ['completed', 'returned', 'pending', 'cancelled', 'shipped']
