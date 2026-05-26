@@ -1,0 +1,10 @@
+semantic_models:
+  - name: orders
+    model: ref('orders')
+    measures:
+      - name: revenue
+        agg: sum
+        expr: amount
+      - name: orders
+        agg: count
+        expr: order_id
