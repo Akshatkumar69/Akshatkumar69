@@ -25,4 +25,4 @@ semantic_models:
         expr: amount
 
       - name: total_orders_measure
-        agg: countaggbase_metric
+        agg: count
