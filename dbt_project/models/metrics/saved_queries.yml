@@ -1,53 +1,46 @@
 version: 2
 
-# ═══════════════════════════════════════════════════════════════════════════════
-# SAVED QUERIES — pre-defined MetricFlow queries for common reports
-# Run: mf list saved-queries
-# ═══════════════════════════════════════════════════════════════════════════════
-
 saved_queries:
 
   - name: monthly_revenue
     label: "Monthly Revenue"
-    description: "Total revenue and order count broken down by month"
+    description: "Total revenue and order count by month"
     query_params:
       metrics:
         - total_revenue
         - total_orders
         - average_order_value
       group_by:
-        - metric_time__month
+        - TimeDimension('orders__ordered_at', 'month')
 
   - name: revenue_by_city
     label: "Revenue by City"
-    description: "Revenue and order count grouped by customer city"
+    description: "Revenue grouped by customer city"
     query_params:
       metrics:
         - total_revenue
         - total_orders
-        - distinct_customers_with_orders
       group_by:
-        - orders__city
+        - Dimension('orders__city')
 
   - name: order_status_summary
     label: "Order Status Summary"
-    description: "Completed vs returned orders with rates"
+    description: "Completed vs returned breakdown"
     query_params:
       metrics:
         - total_orders
         - completed_orders
         - returned_orders
-        - completion_rate
         - return_rate
       group_by:
-        - metric_time__month
+        - TimeDimension('orders__ordered_at', 'month')
 
   - name: customer_signup_trend
     label: "Customer Signup Trend"
-    description: "New vs total customers over time"
+    description: "New customers over time"
     query_params:
       metrics:
         - total_customers
         - total_new_customers
       group_by:
-        - metric_time__month
+        - TimeDimension('customers__signup_date', 'month')

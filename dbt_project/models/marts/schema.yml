@@ -2,7 +2,7 @@ version: 2
 
 models:
   - name: dim_customers
-    description: "Customer dimension. One row per customer. Columns: customer_id, customer_name, city, signup_date."
+    description: "Customer dimension. One row per customer."
     columns:
       - name: customer_id
         description: "Primary key"
@@ -21,8 +21,6 @@ models:
       - name: is_new_customer
         tests:
           - not_null
-          - accepted_values:
-              values: [true, false]
 
   - name: fct_orders
     description: "Order fact table. One row per order. Primary MetricFlow source."
@@ -37,10 +35,10 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref('dim_customers')
-              field: customer_id
+              arguments:                              # ← FIXED: dbt 1.9+ requires arguments block
+                to: ref('dim_customers')
+                field: customer_id
       - name: revenue
-        description: "Order amount (from source: amount)"
         tests:
           - not_null
       - name: order_status

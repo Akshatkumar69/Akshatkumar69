@@ -3,17 +3,10 @@ akshat_dbt_project:
   outputs:
     dev:
       type: databricks
-<<<<<<< HEAD
+
       catalog: workspace        # change to your Unity Catalog name if using UC
       schema: default                # change to your schema
       host: "dbc-0fab22ed-e216.cloud.databricks.com"          # e.g. adb-xxxx.azuredatabricks.net
       http_path: "/sql/1.0/warehouses/9cb6405e857721ec" # e.g. /sql/1.0/warehouses/xxxx
       token: "dapiee17c5914e0749d82a1c63262e96420b"
-=======
-      catalog: workspace                                        # your Unity Catalog name
-      schema: default                                           # your schema
-      host: "{{ env_var('DATABRICKS_HOST') }}"                 # adb-xxxx.azuredatabricks.net
-      http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}"       # /sql/1.0/warehouses/xxxx
-      token: "{{ env_var('DATABRICKS_TOKEN') }}"
->>>>>>> 3876cd939a14e501594e136c56ca0f1c51699eed
       threads: 4
