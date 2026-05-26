@@ -1,0 +1,28 @@
+semantic_models:
+  - name: orders
+
+    model: ref('fct_orders')
+
+    defaults:
+      agg_time_dimension: order_date
+
+    entities:
+      - name: order_id
+        type: primary
+
+    dimensions:
+      - name: order_date
+        type: time
+
+        expr: order_date
+
+        type_params:
+          time_granularity: day
+
+    measures:
+      - name: revenue_measure
+        agg: sum
+        expr: amount
+
+      - name: total_orders_measure
+        agg: countaggbase_metric
