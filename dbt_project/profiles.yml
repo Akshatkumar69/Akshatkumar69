@@ -1,0 +1,11 @@
+akshat_dbt_project:
+  target: dev
+  outputs:
+    dev:
+      type: databricks
+      catalog: workspace                                        # your Unity Catalog name
+      schema: default                                           # your schema
+      host: "{{ env_var('DATABRICKS_HOST') }}"                 # adb-xxxx.azuredatabricks.net
+      http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}"       # /sql/1.0/warehouses/xxxx
+      token: "{{ env_var('DATABRICKS_TOKEN') }}"
+      threads: 4

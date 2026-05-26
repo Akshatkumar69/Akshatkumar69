@@ -1,0 +1,92 @@
+version: 2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SEMANTIC MODEL: orders
+# Source dbt model: fct_orders
+# Real columns used: order_id, customer_id, revenue, order_status,
+#                    is_completed, is_returned, city, ordered_at
+# ═══════════════════════════════════════════════════════════════════════════════
+
+semantic_models:
+  - name: orders
+    description: "Order-level semantic model. One row per order. All revenue and order metrics live here."
+    model: ref('fct_orders')
+
+    # ── ENTITIES ──────────────────────────────────────────────────────────────
+    entities:
+      - name: order
+        type: primary
+        expr: order_id
+
+      - name: customer
+        type: foreign
+        expr: customer_id
+
+    # ── DIMENSIONS ────────────────────────────────────────────────────────────
+    dimensions:
+      - name: order_status
+        type: categorical
+        description: "Order status: completed, returned, pending, cancelled, shipped"
+        expr: order_status
+
+      - name: is_completed
+        type: categorical
+        description: "True if order status is completed"
+        expr: is_completed
+
+      - name: is_returned
+        type: categorical
+        description: "True if order status is returned"
+        expr: is_returned
+
+      - name: city
+        type: categorical
+        description: "Customer city (denormalized from dim_customers)"
+        expr: city
+
+      # PRIMARY TIME DIMENSION — MetricFlow requires exactly one
+      - name: ordered_at
+        type: time
+        type_params:
+          time_granularity: day
+        description: "Order date cast as timestamp. Primary time dimension for all metrics."
+        expr: ordered_at
+        label: "Order Date"
+
+    # ── MEASURES ──────────────────────────────────────────────────────────────
+    measures:
+      - name: order_count
+        description: "Total number of orders"
+        agg: count
+        expr: order_id
+        agg_time_dimension: ordered_at
+
+      - name: revenue
+        description: "Total gross revenue (sum of amount)"
+        agg: sum
+        expr: revenue
+        agg_time_dimension: ordered_at
+
+      - name: average_order_value
+        description: "Average revenue per order"
+        agg: average
+        expr: revenue
+        agg_time_dimension: ordered_at
+
+      - name: distinct_customers
+        description: "Count of unique customers who placed orders"
+        agg: count_distinct
+        expr: customer_id
+        agg_time_dimension: ordered_at
+
+      - name: completed_order_count
+        description: "Count of completed orders"
+        agg: sum
+        expr: "case when is_completed = true then 1 else 0 end"
+        agg_time_dimension: ordered_at
+
+      - name: returned_order_count
+        description: "Count of returned orders"
+        agg: sum
+        expr: "case when is_returned = true then 1 else 0 end"
+        agg_time_dimension: ordered_at

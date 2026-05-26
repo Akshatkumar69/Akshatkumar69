@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Customer dimension. One row per customer. Columns: customer_id, customer_name, city, signup_date."
+    columns:
+      - name: customer_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        tests:
+          - not_null
+      - name: city
+        tests:
+          - not_null
+      - name: signup_date
+        tests:
+          - not_null
+      - name: is_new_customer
+        tests:
+          - not_null
+          - accepted_values:
+              values: [true, false]
+
+  - name: fct_orders
+    description: "Order fact table. One row per order. Primary MetricFlow source."
+    columns:
+      - name: order_id
+        description: "Primary key"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "FK to dim_customers"
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: revenue
+        description: "Order amount (from source: amount)"
+        tests:
+          - not_null
+      - name: order_status
+        tests:
+          - accepted_values:
+              values: ['completed', 'returned', 'pending', 'cancelled', 'shipped']
+      - name: ordered_at
+        description: "Timestamp cast of order_date — required by MetricFlow"
+        tests:
+          - not_null
+      - name: order_date
+        tests:
+          - not_null
+
+  - name: gold_sales_summary
+    description: "Pre-aggregated monthly sales by customer."
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+      - name: order_month
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null

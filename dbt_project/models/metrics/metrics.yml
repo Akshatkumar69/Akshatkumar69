@@ -1,0 +1,113 @@
+version: 2
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# METRICS — powered by MetricFlow
+# Based on REAL columns: order_id, customer_id, order_date, amount, status
+#                        customer_id, customer_name, city, signup_date
+#
+# Query examples (after dbt run + mf validate-configs):
+#   mf query --metrics total_revenue --group-by metric_time
+#   mf query --metrics total_revenue --group-by metric_time__month
+#   mf query --metrics total_orders --group-by orders__order_status
+#   mf query --metrics total_revenue --group-by orders__city
+#   mf query --metrics average_order_value --group-by metric_time__month
+# ═══════════════════════════════════════════════════════════════════════════════
+
+metrics:
+
+  # ── SIMPLE METRICS ───────────────────────────────────────────────────────────
+
+  - name: total_revenue
+    label: "Total Revenue"
+    description: "Sum of order amounts across all orders"
+    type: simple
+    type_params:
+      measure: revenue
+
+  - name: total_orders
+    label: "Total Orders"
+    description: "Count of all orders placed"
+    type: simple
+    type_params:
+      measure: order_count
+
+  - name: total_customers
+    label: "Total Customers"
+    description: "Count of all customers in dim_customers"
+    type: simple
+    type_params:
+      measure: customer_count
+
+  - name: total_new_customers
+    label: "New Customers"
+    description: "Customers who signed up in the last 365 days"
+    type: simple
+    type_params:
+      measure: new_customer_count
+
+  - name: completed_orders
+    label: "Completed Orders"
+    description: "Count of orders with status = completed"
+    type: simple
+    type_params:
+      measure: completed_order_count
+
+  - name: returned_orders
+    label: "Returned Orders"
+    description: "Count of orders with status = returned"
+    type: simple
+    type_params:
+      measure: returned_order_count
+
+  - name: distinct_customers_with_orders
+    label: "Customers Who Ordered"
+    description: "Count of unique customers who placed at least one order"
+    type: simple
+    type_params:
+      measure: distinct_customers
+
+  # ── RATIO METRICS ────────────────────────────────────────────────────────────
+
+  - name: average_order_value
+    label: "Average Order Value (AOV)"
+    description: "Total Revenue divided by Total Orders"
+    type: ratio
+    type_params:
+      numerator: revenue
+      denominator: order_count
+
+  - name: return_rate
+    label: "Return Rate"
+    description: "Returned Orders as a % of Total Orders"
+    type: ratio
+    type_params:
+      numerator: returned_order_count
+      denominator: order_count
+
+  - name: completion_rate
+    label: "Order Completion Rate"
+    description: "Completed Orders as a % of Total Orders"
+    type: ratio
+    type_params:
+      numerator: completed_order_count
+      denominator: order_count
+
+  - name: revenue_per_customer
+    label: "Revenue Per Customer"
+    description: "Total Revenue divided by distinct ordering customers"
+    type: ratio
+    type_params:
+      numerator: revenue
+      denominator: distinct_customers
+
+  # ── DERIVED METRICS ───────────────────────────────────────────────────────────
+
+  - name: orders_per_customer
+    label: "Orders Per Customer"
+    description: "Average number of orders per customer"
+    type: derived
+    type_params:
+      expr: "total_orders / total_customers"
+      metrics:
+        - name: total_orders
+        - name: total_customers
