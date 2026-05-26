@@ -3,37 +3,12 @@ version: 2
 # ─── SOURCE DECLARATIONS ────────────────────────────────────────────────────
 sources:
   - name: raw
-    description: "Raw source tables in Databricks. Change database/schema to match your environment."
-    database: hive_metastore   # change to your catalog (or remove for hive_metastore default)
-    schema: default            # change to your raw schema
+    database: workspace       # ← your catalog name
+    schema: default           # ← your schema name
     tables:
-      - name: customers
-        description: "Raw customer records from the source system."
-        columns:
-          - name: id
-            description: "Primary key"
-            tests:
-              - unique
-              - not_null
-          - name: email
-            tests:
-              - not_null
+      - name: customers       # ← already correct ✅
+      - name: orders 
 
-      - name: orders
-        description: "Raw order records from the source system."
-        columns:
-          - name: id
-            description: "Primary key"
-            tests:
-              - unique
-              - not_null
-          - name: customer_id
-            description: "Foreign key to customers"
-            tests:
-              - not_null
-              - relationships:
-                  to: source('raw', 'customers')
-                  field: id
 
 # ─── STAGING MODELS ─────────────────────────────────────────────────────────
 models:

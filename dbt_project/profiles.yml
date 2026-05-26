@@ -3,11 +3,11 @@ akshat_dbt_project:
   outputs:
     dev:
       type: databricks
-      catalog: hive_metastore        # change to your Unity Catalog name if using UC
+      catalog: workspace        # change to your Unity Catalog name if using UC
       schema: default                # change to your schema
-      host: "{{ env_var('DATABRICKS_HOST') }}"          # e.g. adb-xxxx.azuredatabricks.net
-      http_path: "{{ env_var('DATABRICKS_HTTP_PATH') }}" # e.g. /sql/1.0/warehouses/xxxx
-      token: "{{ env_var('DATABRICKS_TOKEN') }}"
+      host: "dbc-0fab22ed-e216.cloud.databricks.com"          # e.g. adb-xxxx.azuredatabricks.net
+      http_path: "/sql/1.0/warehouses/9cb6405e857721ec" # e.g. /sql/1.0/warehouses/xxxx
+      token: "dapiee17c5914e0749d82a1c63262e96420b"
       threads: 4
 
 # ─────────────────────────────────────────────────────────────────────────────
