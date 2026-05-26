@@ -1,6 +1,6 @@
 select
     customer_id,
     customer_name,
-    country,
+    city,
     signup_date
 from customers

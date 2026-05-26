@@ -2,14 +2,12 @@ version: 2
 
 models:
   - name: time_spine
-
     description: "Time spine model for MetricFlow"
-
-    meta:
-      metricflow:
-        time_spine:
-          standard_granularity_column: date_day
-
+    config:
+      meta:
+        metricflow:
+          time_spine:
+            standard_granularity_column: date_day
     columns:
       - name: date_day
         description: "Date column"
