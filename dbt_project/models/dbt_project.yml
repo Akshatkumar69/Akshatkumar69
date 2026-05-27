@@ -1,0 +1,4 @@
+models:
+  my_project:
+    marketing:
+      +schema: marketing
