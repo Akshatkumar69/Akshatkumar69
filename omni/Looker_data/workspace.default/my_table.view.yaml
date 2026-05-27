@@ -1,0 +1,50 @@
+# Reference this view as workspace_default__my_table
+catalog: workspace
+schema: default
+table_name: my_table
+
+dimensions:
+  item_weight: {}
+  current_date: {}
+  future_date: {}
+  date_difference: {}
+
+  item_identifier:
+    sql: "`Item_Identifier`"
+
+  item_fat_content:
+    sql: "`Item_Fat_Content`"
+
+  item_visibility:
+    sql: "`Item_Visibility`"
+
+  item_type:
+    sql: "`Item_Type`"
+
+  item_mrp:
+    sql: "`Item_MRP`"
+
+  outlet_identifier:
+    sql: "`Outlet_Identifier`"
+
+  outlet_establishment_year:
+    sql: "`Outlet_Establishment_Year`"
+
+  outlet_size:
+    sql: "`Outlet_Size`"
+
+  outlet_location_type:
+    sql: "`Outlet_Location_Type`"
+
+  outlet_type:
+    sql: "`Outlet_Type`"
+
+  item_outlet_sales:
+    sql: "`Item_Outlet_Sales`"
+
+  flag:
+    sql: "`Flag`"
+
+measures:
+  count:
+    aggregate_type: count

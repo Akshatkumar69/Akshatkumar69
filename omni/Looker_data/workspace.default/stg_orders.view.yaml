@@ -1,0 +1,19 @@
+# Reference this view as workspace_default__stg_orders
+catalog: workspace
+schema: default
+table_name: stg_orders
+
+dimensions:
+  order_date: {}
+  amount: {}
+  status: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

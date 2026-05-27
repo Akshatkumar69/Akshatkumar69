@@ -1,0 +1,16 @@
+# Reference this view as workspace_default__dim_customers
+catalog: workspace
+schema: default
+table_name: dim_customers
+
+dimensions:
+  customer_name: {}
+  city: {}
+  signup_date: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

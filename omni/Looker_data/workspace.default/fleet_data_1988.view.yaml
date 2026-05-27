@@ -1,0 +1,39 @@
+# Reference this view as workspace_default__fleet_data_1988
+catalog: workspace
+schema: default
+table_name: fleet_data_1988
+
+dimensions:
+  type:
+    sql: "`Type`"
+
+  serial_number:
+    sql: "`Serial Number`"
+
+  number_of_seats:
+    sql: "`Number of Seats`"
+
+  operator:
+    sql: "`Operator`"
+
+  master_series:
+    sql: "`Master Series`"
+
+  status:
+    sql: "`Status`"
+
+  manufacturer:
+    sql: "`Manufacturer`"
+
+  in_service_date:
+    sql: "`In Service Date`"
+
+  registration:
+    sql: "`Registration`"
+
+  number_of_seats_estimated:
+    sql: "`Number of Seats estimated`"
+
+measures:
+  count:
+    aggregate_type: count

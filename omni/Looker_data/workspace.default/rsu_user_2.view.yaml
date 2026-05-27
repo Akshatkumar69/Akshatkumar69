@@ -1,0 +1,93 @@
+# Reference this view as workspace_default__rsu_user_2
+catalog: workspace
+schema: default
+table_name: rsu_user_2
+
+dimensions:
+  username:
+    sql: "`Username`"
+
+  full_name:
+    sql: "`FullName`"
+
+  business_title:
+    sql: "`BusinessTitle`"
+
+  is_people_manager:
+    sql: "`IsPeopleManager`"
+
+  location:
+    sql: "`Location`"
+
+  work_address:
+    sql: "`WorkAddress`"
+
+  country:
+    sql: "`Country`"
+
+  wdsupplied_org_tree:
+    sql: "`WDSuppliedOrgTree`"
+
+  org_tree:
+    sql: "`OrgTree`"
+
+  org_tree_calculated:
+    sql: "`OrgTreeCalculated`"
+
+  business_unit_cost_center:
+    sql: "`BusinessUnitCostCenter`"
+
+  department_id:
+    sql: "`DepartmentID`"
+    format: ID
+
+  department:
+    sql: "`Department`"
+
+  manager_username:
+    sql: "`ManagerUsername`"
+
+  manager_full_name:
+    sql: "`ManagerFullName`"
+
+  created:
+    sql: "`Created`"
+
+  last_modified:
+    sql: "`LastModified`"
+
+  user_id:
+    sql: "`UserID`"
+    format: ID
+
+  job_level:
+    sql: "`JobLevel`"
+
+  job_family_group:
+    sql: "`JobFamilyGroup`"
+
+  job_family:
+    sql: "`JobFamily`"
+
+  management_role:
+    sql: "`ManagementRole`"
+
+  is_active:
+    sql: "`IsActive`"
+
+  manager_id:
+    sql: "`ManagerID`"
+    format: ID
+
+  is_software_engineer_manager:
+    sql: "`IsSoftwareEngineerManager`"
+
+  count_contractor:
+    sql: "`Count_Contractor`"
+
+  manager_job_family:
+    sql: "`ManagerJobFamily`"
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,15 @@
+# Reference this view as workspace_default__source_customer
+catalog: workspace
+schema: default
+table_name: source_customer
+
+dimensions:
+  customer_name: {}
+  city: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

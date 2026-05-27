@@ -1,0 +1,14 @@
+# Reference this view as workspace_default__gold_sales_summary
+catalog: workspace
+schema: default
+table_name: gold_sales_summary
+
+dimensions:
+  month: {}
+  region: {}
+  total_sales: {}
+  total_orders: {}
+
+measures:
+  count:
+    aggregate_type: count

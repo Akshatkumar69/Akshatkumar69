@@ -1,0 +1,14 @@
+# Reference this view as workspace_default__emp
+catalog: workspace
+schema: default
+table_name: emp
+
+dimensions:
+  empid: {}
+  name: {}
+  dept: {}
+  salary: {}
+
+measures:
+  count:
+    aggregate_type: count
