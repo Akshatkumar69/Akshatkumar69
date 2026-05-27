@@ -1,0 +1,20 @@
+# Reference this view as workspace_default__dim_customer_scd2
+catalog: workspace
+schema: default
+table_name: dim_customer_scd2
+
+dimensions:
+  name: {}
+  city: {}
+  state: {}
+  status: {}
+  start_date: {}
+  end_date: {}
+  is_current: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

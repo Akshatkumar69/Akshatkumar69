@@ -1,0 +1,19 @@
+# Reference this view as workspace_default__order_py
+catalog: workspace
+schema: default
+table_name: order_py
+
+dimensions:
+  order_date: {}
+  amount: {}
+  city: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

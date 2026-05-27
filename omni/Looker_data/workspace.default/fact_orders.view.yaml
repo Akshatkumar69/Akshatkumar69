@@ -1,0 +1,20 @@
+# Reference this view as workspace_default__fact_orders
+catalog: workspace
+schema: default
+table_name: fact_orders
+
+dimensions:
+  order_date: {}
+  amount: {}
+  order_status: {}
+  updated_at: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

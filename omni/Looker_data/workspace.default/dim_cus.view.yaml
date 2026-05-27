@@ -1,0 +1,20 @@
+# Reference this view as workspace_default__dim_cus
+catalog: workspace
+schema: default
+table_name: dim_cus
+
+dimensions:
+  name: {}
+  city: {}
+  state: {}
+  status: {}
+  start_date: {}
+  end_date: {}
+  is_current: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
