@@ -1,0 +1,19 @@
+# Reference this view as workspace_practice__charging_station_2022_2024
+catalog: workspace
+schema: practice
+table_name: charging_station_2022_2024
+
+dimensions:
+  charging_station_count_2024: {}
+  charging_station_count_2023: {}
+  charging_station_count_2022: {}
+
+  state:
+    sql: "`State`"
+
+  region:
+    sql: "`Region`"
+
+measures:
+  count:
+    aggregate_type: count

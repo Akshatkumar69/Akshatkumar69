@@ -1,0 +1,23 @@
+# Reference this view as workspace_practice__drivers
+catalog: workspace
+schema: practice
+table_name: drivers
+
+dimensions:
+  code: {}
+  dob: {}
+  name: {}
+  nationality: {}
+  number: {}
+  url: {}
+
+  driver_id:
+    sql: "`driverId`"
+    format: ID
+
+  driver_ref:
+    sql: "`driverRef`"
+
+measures:
+  count:
+    aggregate_type: count
