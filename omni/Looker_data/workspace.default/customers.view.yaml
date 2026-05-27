@@ -8,10 +8,6 @@ dimensions:
   city: {}
   signup_date: {}
 
-  customer_id:
-    format: ID
-    primary_key: true
-
 measures:
   count:
     aggregate_type: count

@@ -1,0 +1,3 @@
+# this is the workspace_default__fact_orders topic
+joins:
+  workspace_default__orders: {}
