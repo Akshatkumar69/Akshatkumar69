@@ -11,6 +11,9 @@ dimensions:
   order_id:
     format: ID
 
+  customer_id:
+    format: ID
+
 measures:
   count:
     aggregate_type: count
