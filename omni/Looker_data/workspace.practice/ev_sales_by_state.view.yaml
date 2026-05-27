@@ -1,0 +1,15 @@
+# Reference this view as workspace_practice__ev_sales_by_state
+catalog: workspace
+schema: practice
+table_name: ev_sales_by_state
+
+dimensions:
+  date: {}
+  state: {}
+  vehicle_category: {}
+  electric_vehicles_sold: {}
+  total_vehicles_sold: {}
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,13 @@
+# Reference this view as workspace_practice__dim_date
+catalog: workspace
+schema: practice
+table_name: dim_date
+
+dimensions:
+  date: {}
+  fiscal_year: {}
+  quarter: {}
+
+measures:
+  count:
+    aggregate_type: count
