@@ -1,0 +1,23 @@
+# Reference this view as workspace_default__bronze_customers
+catalog: workspace
+schema: default
+table_name: bronze_customers
+
+dimensions:
+  name: {}
+  email: {}
+  phone: {}
+  city: {}
+  state: {}
+  country: {}
+  status: {}
+  updated_at: {}
+  ingest_time: {}
+  source_system: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
