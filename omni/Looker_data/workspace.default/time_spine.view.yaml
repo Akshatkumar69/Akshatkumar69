@@ -1,0 +1,11 @@
+# Reference this view as workspace_default__time_spine
+catalog: workspace
+schema: default
+table_name: time_spine
+
+dimensions:
+  date_day: {}
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,19 @@
+# Reference this view as workspace_default__sales_data
+catalog: workspace
+schema: default
+table_name: sales_data
+
+dimensions:
+  region: {}
+  order_date: {}
+  sales_value: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
