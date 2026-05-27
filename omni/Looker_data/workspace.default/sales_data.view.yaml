@@ -8,6 +8,12 @@ dimensions:
   order_date: {}
   sales_value: {}
 
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
 measures:
   count:
     aggregate_type: count
