@@ -7,10 +7,6 @@ dimensions:
   name: {}
   city: {}
 
-  id:
-    format: ID
-    primary_key: true
-
 measures:
   count:
     aggregate_type: count
