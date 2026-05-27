@@ -1,1 +1,20 @@
-select * from customers
+# Reference this view as workspace_default__cdc_orders
+catalog: workspace
+schema: default
+table_name: cdc_orders
+
+dimensions:
+  amount: {}
+  status: {}
+  operation: {}
+  change_ts: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count
