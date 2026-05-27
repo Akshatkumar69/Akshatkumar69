@@ -31,6 +31,9 @@ dimensions:
   registration:
     sql: "`Registration`"
 
+  number_of_seats_estimated:
+    sql: "`Number of Seats estimated`"
+
 measures:
   count:
     aggregate_type: count
