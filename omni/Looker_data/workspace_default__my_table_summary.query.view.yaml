@@ -1,0 +1,19 @@
+# Reference this view as workspace_default__my_table_summary
+label: My Table Summary
+description: A query view summarizing sales by outlet type and item type from my_table
+
+query:
+  fields:
+    workspace_default__my_table.outlet_type: outlet_type
+    workspace_default__my_table.item_type: item_type
+    workspace_default__my_table.count: total_items
+  base_view: workspace_default__my_table
+
+dimensions:
+  outlet_type: {}
+  item_type: {}
+  total_items: {}
+
+measures:
+  count:
+    aggregate_type: count
