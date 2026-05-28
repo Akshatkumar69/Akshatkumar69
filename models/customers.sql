@@ -1,4 +1,4 @@
 SELECT
     CUSTOMER_ID,
-    CUSTOMER_NAME,
+    CUSTOMER_NAME
 FROM workspace.default.CUSTOMERS
