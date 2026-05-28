@@ -1,8 +1,12 @@
+WITH customers_cte AS (
+
+    SELECT
+        CUSTOMER_ID,
+        CUSTOMER_NAME
+    FROM {{ ref('customers') }}
+)
 SELECT
-    c.CUSTOMER_ID,
-    c.CUSTOMER_NAME,
-    o.ORDER_ID,
-    o.AMOUNT
-FROM {{ ref('stg_customers') }} c
-JOIN ORDERS o
-    ON c.CUSTOMER_ID = o.CUSTOMER_ID
+    CUSTOMER_ID,
+    CUSTOMER_NAME,
+    LENGTH(CUSTOMER_NAME) AS NAME_LENGTH
+FROM customers_cte
