@@ -1,0 +1,178 @@
+# Reference this view as omni_dbt__sales_data_test_data
+schema_label: ""
+
+schema: omni_dbt
+table_name: sales_data_test_data
+
+dimensions:
+  "1": {}
+
+  category:
+    sql: "`Category`"
+
+  company:
+    sql: "`Company`"
+
+  customer_city:
+    sql: "`Customer City`"
+
+  customer_name:
+    sql: "`Customer Name`"
+
+  customer_state:
+    sql: "`Customer State`"
+
+  customer_zip_code:
+    sql: "`Customer Zip Code`"
+
+  dummy_highlight:
+    sql: "`Dummy Highlight`"
+
+  last_updated:
+    sql: "`Last updated`"
+
+  manufacturer:
+    sql: "`Manufacturer`"
+
+  order_id:
+    sql: "`Order ID`"
+    format: ID
+
+  product:
+    sql: "`Product`"
+
+  purchase_date:
+    sql: "`Purchase Date`"
+
+  region:
+    sql: "`Region`"
+
+  segments_abbrev:
+    sql: "`Segments Abbrev`"
+
+  selected_metric__orders__colour:
+    sql: "`Selected Metric (Orders) Colour`"
+
+  selected_metric__profit__colour:
+    sql: "`Selected Metric (Profit) Colour`"
+
+  selected_metric__sales__colour:
+    sql: "`Selected Metric (Sales) Colour`"
+
+  selected_year:
+    sql: "`Selected Year`"
+
+  ship_date:
+    sql: "`Ship Date`"
+
+  cost_of_goods_sold_new:
+    sql: "`Cost of Goods Sold_new`"
+
+  metric_swap_calc____chg___label_:
+    sql: "`Metric Swap Calc (% Chg) (Label)`"
+
+  metric_swap_calc__arrow_neg___label_:
+    sql: "`Metric Swap Calc (Arrow NEG) (Label)`"
+
+  metric_swap_calc__arrow_pos___label_:
+    sql: "`Metric Swap Calc (Arrow POS) (Label)`"
+
+  metric_swap_calc__cy_:
+    sql: "`Metric Swap Calc (CY)`"
+
+  metric_swap_calc__cy___label_:
+    sql: "`Metric Swap Calc (CY) (Label)`"
+
+  metric_swap_calc__py_:
+    sql: "`Metric Swap Calc (PY)`"
+
+  metric_swap_calc__py___label_:
+    sql: "`Metric Swap Calc (PY) (Label)`"
+
+  prev_year__bans_:
+    sql: "`Prev Year (BANs)`"
+
+  profit:
+    sql: "`Profit`"
+
+  profit___chg:
+    sql: "`Profit % Chg`"
+
+  profit___chg__neg_:
+    sql: "`Profit % Chg (Neg)`"
+
+  profit___chg__pos_:
+    sql: "`Profit % Chg (Pos)`"
+
+  profit_cy:
+    sql: "`Profit CY`"
+
+  profit_py:
+    sql: "`Profit PY`"
+
+  profit_ratio:
+    sql: "`Profit Ratio`"
+
+  profit_ratio__filter_:
+    sql: "`Profit Ratio (Filter)`"
+
+  profit_ratio__table_colour_:
+    sql: "`Profit Ratio (Table Colour)`"
+
+  revenue:
+    sql: "`Revenue`"
+
+  sales___chg:
+    sql: "`Sales % Chg`"
+
+  sales___chg__neg_:
+    sql: "`Sales % Chg (Neg)`"
+
+  sales___chg__pos_:
+    sql: "`Sales % Chg (Pos)`"
+
+  sales_cy:
+    sql: "`Sales CY`"
+
+  sales_py:
+    sql: "`Sales PY`"
+
+  total_customers___chg:
+    sql: "`Total Customers % Chg`"
+
+  total_customers___chg__neg_:
+    sql: "`Total Customers % Chg (Neg)`"
+
+  total_customers___chg__pos_:
+    sql: "`Total Customers % Chg (Pos)`"
+
+  total_customers_cy:
+    sql: "`Total Customers CY`"
+
+  total_customers_py:
+    sql: "`Total Customers PY`"
+
+  total_orders___chg:
+    sql: "`Total Orders % Chg`"
+
+  total_orders___chg__neg_:
+    sql: "`Total Orders % Chg (Neg)`"
+
+  total_orders___chg__pos_:
+    sql: "`Total Orders % Chg (Pos)`"
+
+  total_orders_cy:
+    sql: "`Total Orders CY`"
+
+  total_orders_py:
+    sql: "`Total Orders PY`"
+
+  units_sold:
+    sql: "`Units Sold`"
+
+  year:
+    sql: "`Year`"
+
+measures:
+  count:
+    aggregate_type: count

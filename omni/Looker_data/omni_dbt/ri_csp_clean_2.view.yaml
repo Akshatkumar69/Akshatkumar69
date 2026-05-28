@@ -1,0 +1,84 @@
+# Reference this view as omni_dbt__ri_csp_clean_2
+schema_label: ""
+
+schema: omni_dbt
+table_name: ri_csp_clean_2
+
+dimensions:
+  scope: {}
+  region: {}
+  status: {}
+  key: {}
+  name: {}
+
+  cloud:
+    sql: "`Cloud`"
+
+  purchase_type:
+    sql: "`purchaseType`"
+
+  payer_group:
+    sql: "`payerGroup`"
+
+  purchase_account_name:
+    sql: "`purchaseAccountName`"
+
+  purchase_account_id:
+    sql: "`purchaseAccountID`"
+    format: ID
+
+  hourly_commit:
+    sql: "`hourlyCommit`"
+
+  start_date:
+    sql: "`startDate`"
+
+  end_date:
+    sql: "`endDate`"
+
+  reservation_type:
+    sql: "`reservationType`"
+
+  family:
+    sql: "`Family`"
+
+  annual_cost:
+    sql: "`annualCost`"
+
+  date_loaded:
+    sql: "`DateLoaded`"
+
+  renewal_date:
+    sql: "`Renewal Date`"
+
+  renewaltimeperiod_csp:
+    sql: "`RenewalTimePeriod_CSP`"
+
+  instance_count:
+    sql: "`instanceCount`"
+
+  discount_:
+    sql: "`discount%`"
+
+  purchase_expected_saving:
+    sql: "`purchaseExpectedSaving`"
+
+  purchase_cost:
+    sql: "`purchaseCost`"
+
+  purchasecoverageincrease_:
+    sql: "`purchaseCoverageIncrease%`"
+
+  newtotalproductcoverage_:
+    sql: "`newTotalProductCoverage%`"
+
+  purchase_ticket_id:
+    sql: "`purchaseTicketID`"
+    format: ID
+
+  asset_link:
+    sql: "`Asset_Link`"
+
+measures:
+  count:
+    aggregate_type: count

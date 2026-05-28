@@ -46,3 +46,45 @@
   on_sql: ${workspace_default__stg_orders.order_id} =
     ${workspace_default__orders.order_id}
   relationship_type: assumed_many_to_one
+
+- join_from_view: omni_dbt__cdc_orders
+  join_to_view: omni_dbt__orders
+  join_type: always_left
+  on_sql: ${omni_dbt__cdc_orders.order_id} = ${omni_dbt__orders.order_id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: omni_dbt__source_customer
+  join_to_view: omni_dbt__customer
+  join_type: always_left
+  on_sql: ${omni_dbt__source_customer.customer_id} = ${omni_dbt__customer.id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: omni_dbt__fact_orders
+  join_to_view: omni_dbt__orders
+  join_type: always_left
+  on_sql: ${omni_dbt__fact_orders.order_id} = ${omni_dbt__orders.order_id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: omni_dbt__fct_orders
+  join_to_view: omni_dbt__orders
+  join_type: always_left
+  on_sql: ${omni_dbt__fct_orders.order_id} = ${omni_dbt__orders.order_id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: omni_dbt__orders_interview
+  join_to_view: omni_dbt__orders
+  join_type: always_left
+  on_sql: ${omni_dbt__orders_interview.order_id} = ${omni_dbt__orders.order_id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: omni_dbt__sales_data
+  join_to_view: omni_dbt__orders
+  join_type: always_left
+  on_sql: ${omni_dbt__sales_data.order_id} = ${omni_dbt__orders.order_id}
+  relationship_type: assumed_many_to_one
+
+- join_from_view: omni_dbt__stg_orders
+  join_to_view: omni_dbt__orders
+  join_type: always_left
+  on_sql: ${omni_dbt__stg_orders.order_id} = ${omni_dbt__orders.order_id}
+  relationship_type: assumed_many_to_one

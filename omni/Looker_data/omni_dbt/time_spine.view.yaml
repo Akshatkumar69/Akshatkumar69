@@ -1,0 +1,12 @@
+# Reference this view as omni_dbt__time_spine
+schema_label: ""
+
+schema: omni_dbt
+table_name: time_spine
+
+dimensions:
+  date_day: {}
+
+measures:
+  count:
+    aggregate_type: count

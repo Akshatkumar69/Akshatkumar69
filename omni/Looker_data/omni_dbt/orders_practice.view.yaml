@@ -1,0 +1,20 @@
+# Reference this view as omni_dbt__orders_practice
+schema_label: ""
+
+schema: omni_dbt
+table_name: orders_practice
+
+dimensions:
+  order_date: {}
+  amount: {}
+  city: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

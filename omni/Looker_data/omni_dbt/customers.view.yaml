@@ -1,6 +1,7 @@
-# Reference this view as workspace_default__customers
-catalog: workspace
-schema: default
+# Reference this view as omni_dbt__customers
+schema_label: ""
+
+schema: omni_dbt
 table_name: customers
 
 dimensions:

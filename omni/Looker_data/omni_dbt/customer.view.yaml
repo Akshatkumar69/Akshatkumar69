@@ -1,0 +1,17 @@
+# Reference this view as omni_dbt__customer
+schema_label: ""
+
+schema: omni_dbt
+table_name: customer
+
+dimensions:
+  name: {}
+  city: {}
+
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count
