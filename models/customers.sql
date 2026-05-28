@@ -1,0 +1,4 @@
+SELECT
+    CUSTOMER_ID,
+    CUSTOMER_NAME
+FROM workspace.default.CUSTOMERS
