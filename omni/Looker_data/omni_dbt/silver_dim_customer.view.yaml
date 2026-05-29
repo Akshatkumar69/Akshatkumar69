@@ -1,0 +1,25 @@
+# Reference this view as omni_dbt__silver_dim_customer
+schema_label: ""
+
+schema: omni_dbt
+table_name: silver_dim_customer
+
+dimensions:
+  name: {}
+  email: {}
+  phone: {}
+  city: {}
+  state: {}
+  country: {}
+  status: {}
+  start_date: {}
+  end_date: {}
+  is_current: {}
+  ingest_time: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,21 @@
+# Reference this view as omni_dbt__orders
+schema_label: ""
+
+schema: omni_dbt
+table_name: orders
+
+dimensions:
+  order_date: {}
+  amount: {}
+  status: {}
+
+  order_id:
+    format: ID
+    primary_key: true
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

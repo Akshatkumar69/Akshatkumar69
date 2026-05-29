@@ -1,0 +1,14 @@
+# Reference this view as omni_dbt__my_second_dbt_model
+schema_label: ""
+
+schema: omni_dbt
+table_name: my_second_dbt_model
+
+dimensions:
+  id:
+    format: ID
+    primary_key: true
+
+measures:
+  count:
+    aggregate_type: count

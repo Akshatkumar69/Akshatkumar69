@@ -1,0 +1,15 @@
+# Reference this view as omni_dbt__emp
+schema_label: ""
+
+schema: omni_dbt
+table_name: emp
+
+dimensions:
+  empid: {}
+  name: {}
+  dept: {}
+  salary: {}
+
+measures:
+  count:
+    aggregate_type: count

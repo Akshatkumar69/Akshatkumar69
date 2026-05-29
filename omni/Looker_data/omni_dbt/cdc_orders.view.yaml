@@ -1,0 +1,21 @@
+# Reference this view as omni_dbt__cdc_orders
+schema_label: ""
+
+schema: omni_dbt
+table_name: cdc_orders
+
+dimensions:
+  amount: {}
+  status: {}
+  operation: {}
+  change_ts: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,17 @@
+# Reference this view as omni_dbt__dim_customers
+schema_label: ""
+
+schema: omni_dbt
+table_name: dim_customers
+
+dimensions:
+  customer_name: {}
+  city: {}
+  signup_date: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

@@ -1,0 +1,20 @@
+# Reference this view as omni_dbt__sales_data
+schema_label: ""
+
+schema: omni_dbt
+table_name: sales_data
+
+dimensions:
+  region: {}
+  order_date: {}
+  sales_value: {}
+
+  order_id:
+    format: ID
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

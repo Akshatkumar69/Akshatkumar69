@@ -1,0 +1,24 @@
+# Reference this view as omni_dbt__ecommerce_raw_customers
+schema_label: ""
+
+schema: omni_dbt
+table_name: ecommerce_raw_customers
+
+dimensions:
+  name: {}
+  email: {}
+  phone: {}
+  city: {}
+  state: {}
+  country: {}
+  status: {}
+  updated_at: {}
+  ingest_time: {}
+  source_system: {}
+
+  customer_id:
+    format: ID
+
+measures:
+  count:
+    aggregate_type: count

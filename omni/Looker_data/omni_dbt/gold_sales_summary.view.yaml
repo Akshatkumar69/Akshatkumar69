@@ -1,0 +1,15 @@
+# Reference this view as omni_dbt__gold_sales_summary
+schema_label: ""
+
+schema: omni_dbt
+table_name: gold_sales_summary
+
+dimensions:
+  month: {}
+  region: {}
+  total_sales: {}
+  total_orders: {}
+
+measures:
+  count:
+    aggregate_type: count
