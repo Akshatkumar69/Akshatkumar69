@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: customers
+    description: "Customer dimension table from the workspace."
+    columns:
+      - name: CUSTOMER_ID
+        description: "Unique identifier for a customer."
+        constraints:
+          - type: primary_key
+        tests:
+          - unique
+          - not_null
+      - name: CUSTOMER_NAME
+        description: "Full name of the customer."
+        tests:
+          - not_null
