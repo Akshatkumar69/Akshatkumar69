@@ -1,17 +1,24 @@
 # Reference this view as omni_dbt__customers
 schema_label: ""
+#This description was pulled from dbt.
+description: Customer dimension table from the workspace.
 
 schema: omni_dbt
 table_name: customers
 
 dimensions:
-  customer_name: {}
   city: {}
   signup_date: {}
 
   customer_id:
     format: ID
+    #This description was pulled from dbt.
+    description: Unique identifier for a customer.
     primary_key: true
+
+  customer_name:
+    #This description was pulled from dbt.
+    description: Full name of the customer.
 
 measures:
   count:
@@ -21,6 +28,7 @@ measures:
 dbt:
   name: customers
   target_schema: default
+  description: Customer dimension table from the workspace.
   config:
     materialized: view
   code: |-
