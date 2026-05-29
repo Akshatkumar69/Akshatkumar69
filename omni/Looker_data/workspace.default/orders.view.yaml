@@ -1,4 +1,6 @@
 # Reference this view as workspace_default__orders
+label: Orders
+
 catalog: workspace
 schema: default
 table_name: orders
@@ -15,6 +17,35 @@ dimensions:
   customer_id:
     format: ID
 
+  _entity_order:
+    # Entity is defined in the 'orders' dbt semantic model (models/semantic_models.yml)
+    sql: ${order_id}
+    hidden: true
+
+  _entity_customer:
+    # Entity is defined in the 'orders' dbt semantic model (models/semantic_models.yml)
+    sql: ${customer_id}
+    hidden: true
+
 measures:
   count:
     aggregate_type: count
+
+  total_amount:
+    # Measure is defined in the 'orders' dbt semantic model (models/semantic_models.yml)
+    sql: ${amount}
+    aggregate_type: sum
+
+#The info below was pulled from your dbt repository and is read-only.
+dbt:
+  name: orders
+  target_schema: default
+  config:
+    materialized: view
+  code: |-
+    SELECT
+        ORDER_ID,
+        CUSTOMER_ID,
+        AMOUNT,
+        ORDER_DATE
+    FROM workspace.default.ORDERS
