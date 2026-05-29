@@ -1,4 +1,5 @@
 # Reference this view as omni_dbt__customers
+label: Customers
 schema_label: ""
 #This description was pulled from dbt.
 description: Customer dimension table from the workspace.
@@ -19,6 +20,11 @@ dimensions:
   customer_name:
     #This description was pulled from dbt.
     description: Full name of the customer.
+
+  _entity_customer:
+    # Entity is defined in the 'customers' dbt semantic model (models/semantic_models.yml)
+    sql: ${omni_dbt__customers.customer_id}
+    hidden: true
 
 measures:
   count:
