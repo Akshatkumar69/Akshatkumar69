@@ -1,0 +1,16 @@
+models:
+  - name: metricflow_time_spine
+    description: "Daily time spine for the dbt semantic layer."
+
+semantic_models:
+  - name: metricflow_time_spine
+    model: ref('metricflow_time_spine')
+    entities:
+      - name: time_spine
+        type: primary
+        expr: date_day
+    dimensions:
+      - name: date_day
+        type: time
+        type_params:
+          time_granularity: day
